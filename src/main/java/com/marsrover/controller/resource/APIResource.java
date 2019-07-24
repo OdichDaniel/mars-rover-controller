@@ -14,7 +14,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.google.gson.Gson;
+import com.marsrover.controller.exception.ServiceException;
+import com.marsrover.controller.models.ErrorMessage;
 import com.marsrover.controller.utils.Coordinates;
+
 
 
 @Path("/")
@@ -33,8 +36,11 @@ public class APIResource {
 	public Response receiveCommands(String commands) {
 
 		if (commands == null && commands.isEmpty()) {
-		
-			throw new WebApplicationException(Response.status(Status.BAD_REQUEST).entity("Request command cannot be empty or null").build());
+			
+			ErrorMessage message = new ErrorMessage();
+			message.setCode(Status.BAD_REQUEST.getStatusCode());
+			message.setErrorMessage("Command request cannot be empty or null");
+			throw new ServiceException(new Gson().toJson(message), Status.BAD_REQUEST.getStatusCode());
 		}
 
 		mCommands = new ArrayList<>();
@@ -62,7 +68,11 @@ public class APIResource {
 			// Implementation
 			return false;
 		default:
-			throw new WebApplicationException(Response.status(Status.BAD_REQUEST).entity("Unknown request").build());
+			
+			ErrorMessage message = new ErrorMessage();
+			message.setCode(Status.BAD_REQUEST.getStatusCode());
+			message.setErrorMessage("Invalid command");
+			throw new ServiceException(new Gson().toJson(message), Status.BAD_REQUEST.getStatusCode());
 			
 		}
 	}
