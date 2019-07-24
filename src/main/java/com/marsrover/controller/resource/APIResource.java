@@ -20,15 +20,27 @@ import com.marsrover.controller.utils.Coordinates;
 
 
 
+/**
+ * @author macosx
+ * Web API resource class
+ *
+ */
+
 @Path("/")
 public class APIResource {
 
+	
 	@Inject
 	private Coordinates coordinates;
 	
 	private List<Boolean> mCommands;
 
 	
+	/**
+	 * 
+	 * @param commands the rover command sent by the rover
+	 * @return
+	 */
 	@POST
 	@Path("move")
 	@Consumes(MediaType.TEXT_PLAIN)
