@@ -3,6 +3,7 @@ package com.marsrover.controller.resource;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -19,7 +20,7 @@ import com.marsrover.controller.utils.Coordinates;
 @Path("/")
 public class APIResource {
 
-	//this should be done through dependency injection
+	@Inject
 	private Coordinates coordinates;
 	
 	private List<Boolean> mCommands;
@@ -48,11 +49,12 @@ public class APIResource {
 	public boolean receiveSingleCommand(char command) {
 		switch (Character.toUpperCase(command)) {
 		case 'F':
-			// Implementation
-			return false;
+			
+			return coordinates.moveForward();
+			
 		case 'B':
-			// Implementation
-			return false;
+			return coordinates.moveBackward();
+		
 		case 'L':
 			// Implementation
 			return false;
